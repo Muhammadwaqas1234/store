@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Payment & Delivery</title>
+  <link rel="stylesheet" href="styles/payment.css" />
+</head>
+<body>
+
+  <section class="container">
+
+    <h1>Payment & Delivery Methods</h1>
+
+    <form id="paymentDeliveryForm" novalidate>
+
+      <!-- Payment Methods -->
+      <fieldset class="method-group">
+        <legend>Choose Payment Method</legend>
+        
+        <label>
+          <input type="radio" name="payment" value="Credit Card" required />
+          Credit Card
+        </label>
+        
+        <label>
+          <input type="radio" name="payment" value="PayPal" />
+          PayPal
+        </label>
+        
+        <label>
+          <input type="radio" name="payment" value="Cash on Delivery" />
+          Cash on Delivery
+        </label>
+      </fieldset>
+
+      <!-- Delivery Methods -->
+      <fieldset class="method-group">
+        <legend>Choose Delivery Method</legend>
+        
+        <label>
+          <input type="radio" name="delivery" value="Standard Shipping" required />
+          Standard Shipping (3-5 days)
+        </label>
+        
+        <label>
+          <input type="radio" name="delivery" value="Express Shipping" />
+          Express Shipping (1-2 days)
+        </label>
+        
+        <label>
+          <input type="radio" name="delivery" value="Store Pickup" />
+          Store Pickup
+        </label>
+      </fieldset>
+
+      <!-- Summary -->
+      <div id="summary" class="summary">
+        <h2>Order Summary</h2>
+        <p><strong>Payment Method:</strong> <span id="summaryPayment">None selected</span></p>
+        <p><strong>Delivery Method:</strong> <span id="summaryDelivery">None selected</span></p>
+      </div>
+
+      <button type="submit" class="btn-primary">Confirm Order</button>
+      <p id="confirmationMsg" class="confirmation-msg"></p>
+
+    </form>
+
+  </section>
+
+  <script>document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('paymentDeliveryForm');
+  const summaryPayment = document.getElementById('summaryPayment');
+  const summaryDelivery = document.getElementById('summaryDelivery');
+  const confirmationMsg = document.getElementById('confirmationMsg');
+
+  // Update summary when selection changes
+  form.addEventListener('change', () => {
+    const selectedPayment = form.payment.value || 'None selected';
+    const selectedDelivery = form.delivery.value || 'None selected';
+
+    summaryPayment.textContent = selectedPayment;
+    summaryDelivery.textContent = selectedDelivery;
+
+    // Clear confirmation message on changes
+    confirmationMsg.textContent = '';
+  });
+
+  // On form submission
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const selectedPayment = form.payment.value;
+    const selectedDelivery = form.delivery.value;
+
+    // Simple validation
+    if (!selectedPayment || !selectedDelivery) {
+      confirmationMsg.style.color = 'red';
+      confirmationMsg.textContent = 'Please select both payment and delivery methods.';
+      return;
+    }
+
+    // Simulate order confirmation (replace with backend call)
+    confirmationMsg.style.color = '#09ede2';
+    confirmationMsg.textContent = `Order confirmed! Payment: ${selectedPayment}, Delivery: ${selectedDelivery}. Thank you for your purchase!`;
+
+    form.reset();
+    summaryPayment.textContent = 'None selected';
+    summaryDelivery.textContent = 'None selected';
+  });
+});
+</script>
+</body>
+</html>
